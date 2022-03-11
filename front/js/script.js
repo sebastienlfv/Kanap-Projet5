@@ -15,7 +15,7 @@ function fetchKanaps() {
       }
     })
     .then(function(value) {
-      console.log(value)
+      console.log(value);
       displayKanap(value)
     })
     .catch(function(err) {
@@ -26,7 +26,8 @@ function fetchKanaps() {
 function displayKanap(dataFromApi) {
   const kanapElement = document.querySelector('#items')
 
-  for (let i = 0; i < dataFromApi.lenght; i++){
+  for (let i = 0; i < dataFromApi.lenght; i++) {
+    
     let paragraph = document.createElement("p");
     paragraph.innerHTML = dataFromApi[i].name;
     kanapElement.appendChild(paragraph)
