@@ -26,10 +26,24 @@ function fetchKanaps() {
 function displayKanap(dataFromApi) {
   const kanapElement = document.querySelector('#items')
 
-  for (let i = 0; i < dataFromApi.lenght; i++) {
+  for (let i = 0; i < dataFromApi.length; i++) {
+
+    let linkKanap = document.createElement("a");
+    kanapElement.appendChild(linkKanap)
+
+    let containerKanap = document.createElement("article");
+    linkKanap.appendChild(containerKanap)
+
+    let imgKanap = document.createElement("img")
+    imgKanap.src = dataFromApi[i].imageUrl;
+    containerKanap.appendChild(imgKanap)
     
+    let titleKanap = document.createElement("h3");
+    titleKanap.innerHTML = dataFromApi[i].name;
+    containerKanap.appendChild(titleKanap)
+
     let paragraph = document.createElement("p");
-    paragraph.innerHTML = dataFromApi[i].name;
-    kanapElement.appendChild(paragraph)
+    paragraph.innerHTML = dataFromApi[i].description;
+    containerKanap.appendChild(paragraph)
   }
 }
