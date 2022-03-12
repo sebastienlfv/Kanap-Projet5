@@ -28,6 +28,10 @@ function displayKanap(dataFromApi) {
 
   for (let i = 0; i < dataFromApi.length; i++) {
 
+    let paramsString = "front/html/product.html?id=42";
+    let searchParams = new URLSearchParams(paramsString);
+
+    
     let linkKanap = document.createElement("a");
     linkKanap.href = dataFromApi[i]._id;
     kanapElement.appendChild(linkKanap)
