@@ -29,6 +29,7 @@ function displayKanap(dataFromApi) {
   for (let i = 0; i < dataFromApi.length; i++) {
 
     let linkKanap = document.createElement("a");
+    linkKanap.href = dataFromApi[i]._id;
     kanapElement.appendChild(linkKanap)
 
     let containerKanap = document.createElement("article");
