@@ -36,13 +36,14 @@ function displayKanap(dataFromApi) {
 
     
     let linkKanap = document.createElement("a");
-    linkKanap.href = dataFromApi[i]._id;
+    linkKanap.href = "product.html?id=107fb5b75607497b96722bda5b504926";
+    // linkKanap.href = dataFromApi[i]._id;
     kanapElement.appendChild(linkKanap)
 
     let containerKanap = document.createElement("article");
     linkKanap.appendChild(containerKanap)
 
-    let imgKanap = document.createElement("img")
+    let imgKanap = document.createElement("img");
     imgKanap.src = dataFromApi[i].imageUrl;
     containerKanap.appendChild(imgKanap)
 
