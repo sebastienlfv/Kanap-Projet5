@@ -28,16 +28,12 @@ function displayKanap(dataFromApi) {
 
   for (let i = 0; i < dataFromApi.length; i++) {
 
-    // let paramsString = "front/html/product.html?id=42";
-    // let searchParams = new URLSearchParams(paramsString);
 
-    // searchParams.get("42") === _id;
-    // searchParams.get("front/html/product.html?id=") === link;
-
+    let _id = dataFromApi[i]._id;
+    
     
     let linkKanap = document.createElement("a");
-    linkKanap.href = "product.html?id=107fb5b75607497b96722bda5b504926";
-    // linkKanap.href = dataFromApi[i]._id;
+    linkKanap.href = "/front/html/product.html?" + (_id);
     kanapElement.appendChild(linkKanap)
 
     let containerKanap = document.createElement("article");
