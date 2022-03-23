@@ -58,7 +58,7 @@ const addKanap = (product) => {
   console.log(bouton);
   bouton.addEventListener('click', () => {
     // créer une variable cartItem qui est un objet vide
-    let localStorageItems = JSON.parse(localStorage.getItem('produit'))
+    let localStorageItems = JSON.parse(localStorage.getItem('produit')) || [];
     let allItemsInCart = []
     let cartItem = {}
     let colorKanap = document.getElementById('colors')
@@ -84,6 +84,8 @@ const addKanap = (product) => {
 
     // l'ajout de cartItem dans le localStorage
 
+    localStorageItems = [...localStorageItems, product];
+    localStorage.setItem('produit', JSON.stringify(localStorageItems))
 
 
 
