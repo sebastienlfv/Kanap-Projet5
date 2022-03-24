@@ -84,7 +84,7 @@ const addKanap = (product) => {
 
     // l'ajout de cartItem dans le localStorage
 
-    localStorageItems = [...localStorageItems, product];
+    localStorageItems = [...localStorageItems, cartItem];
     localStorage.setItem('produit', JSON.stringify(localStorageItems))
 
 
