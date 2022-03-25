@@ -67,6 +67,8 @@ const addKanap = (product) => {
     // cartitem.info = information de mon produit
 
     cartItem.info = product
+    cartItem.id = product._id
+    console.log(cartItem.id)
 
     // cartItem.quantity = quantité sélectionner dans le selecteur
 
@@ -85,6 +87,14 @@ const addKanap = (product) => {
 
 
     console.log('localStorageItems', localStorageItems)
+
+    // Vérifier si il y a déjà le même canapé dans le panier ainsi que la même variante de couleur, si oui
+
+    if (localStorage.getItem(cartItem.id)){
+      cartItem.quantity++
+    }
+
+    // Alors rajouter une quantité 
 
   });
 };
