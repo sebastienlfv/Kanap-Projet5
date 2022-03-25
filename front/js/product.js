@@ -63,11 +63,6 @@ const addKanap = (product) => {
     let cartItem = {}
     let colorKanap = document.getElementById('colors')
     let quantityKanap = document.getElementById('quantity')
-    // let produitTableau = []
-    //  if JSON.parse(localStorage.getItem('produit')) == null {
-
-    //  }
-    // let produitTableau = JSON.parse(localStorage.getItem('produit'))
 
     // cartitem.info = information de mon produit
 
@@ -88,10 +83,6 @@ const addKanap = (product) => {
     localStorage.setItem('produit', JSON.stringify(localStorageItems))
 
 
-
-    // let select = document.getElementById('colors')
-    // console.log(select);
-    // console.log(produitTableau);
 
     console.log('localStorageItems', localStorageItems)
 
