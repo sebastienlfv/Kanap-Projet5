@@ -37,6 +37,7 @@ function displayProduct(product) {
 
     divImgKanap.appendChild(imgKanap);
     imgKanap.src = product.imageUrl
+    imgKanap.alt = product.altTxt
 
 
 
@@ -67,12 +68,10 @@ const addKanap = (product) => {
     // cartitem.info = information de mon produit
 
     cartItem.info = product
-    cartItem.id = product._id
-    console.log(cartItem.id)
 
     // cartItem.quantity = quantité sélectionner dans le selecteur
 
-    cartItem.quantity = quantityKanap.value
+    cartItem.quantity = parseInt(quantityKanap.value)
 
     // cartItem.selectedVariant = la variante sélectionner dans le selecteur
 
@@ -81,20 +80,18 @@ const addKanap = (product) => {
 
     // l'ajout de cartItem dans le localStorage
 
-    localStorageItems = [...localStorageItems, cartItem];
+    let itemFound = localStorageItems.find(p => p.selectedVariant == cartItem.selectedVariant)
+    if (itemFound) {
+      itemFound.quantity += parseInt(cartItem.quantity)
+    } else {
+      localStorageItems = [...localStorageItems, cartItem];
+    }
+
     localStorage.setItem('produit', JSON.stringify(localStorageItems))
-
-
 
     console.log('localStorageItems', localStorageItems)
 
-    // Vérifier si il y a déjà le même canapé dans le panier ainsi que la même variante de couleur, si oui
 
-    if (localStorage.getItem(cartItem.id)){
-      cartItem.quantity++
-    }
-
-    // Alors rajouter une quantité 
 
   });
 };
