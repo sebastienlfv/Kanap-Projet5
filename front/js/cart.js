@@ -78,6 +78,26 @@ products.forEach(product => {
     contentSettingsDeleteP.classList.add('deleteItem')
     contentSettingsDeleteP.innerHTML = "Supprimer"
     contentSettingsDelete.appendChild(contentSettingsDeleteP)
+
+
+    let btn_supprimer = document.querySelectorAll('.deleteItem');
+    console.log(btn_supprimer)
+
+    for (let l = 0; l < btn_supprimer.length; l++){
+        btn_supprimer[l].addEventListener('click', (event) =>{
+            event.preventDefault();
+            console.log(event)
+
+            let id_delete = product.info._id;
+
+            product = product.filter(elem => elem.info._id !== id_delete);
+
+            localStorage.setItem('produit', JSON.stringify(product));
+
+            alert("Ce produit a été supprimer du panier")
+            window.location.href = 'cart.html'
+        })
+    }
 });
 
 
