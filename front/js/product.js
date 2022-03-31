@@ -59,8 +59,7 @@ const addKanap = (product) => {
   console.log(bouton);
   bouton.addEventListener('click', () => {
     // créer une variable cartItem qui est un objet vide
-    let localStorageItems = JSON.parse(localStorage.getItem('produit')) || [];
-    let allItemsInCart = []
+    let localStorageItems = JSON.parse(localStorage.getItem('panier')) || [];
     let cartItem = {}
     let colorKanap = document.getElementById('colors')
     let quantityKanap = document.getElementById('quantity')
@@ -80,14 +79,15 @@ const addKanap = (product) => {
 
     // l'ajout de cartItem dans le localStorage
 
-    let itemFound = localStorageItems.find(p => p.selectedVariant == cartItem.selectedVariant)
+    let itemFound = localStorageItems.find(p => p.info._id == cartItem.info._id && p.selectedVariant == cartItem.selectedVariant)
     if (itemFound) {
       itemFound.quantity += parseInt(cartItem.quantity)
     } else {
-      localStorageItems = [...localStorageItems, cartItem];
-    }
+      localStorageItems.push(cartItem);
+    } 
 
-    localStorage.setItem('produit', JSON.stringify(localStorageItems))
+
+    localStorage.setItem('panier', JSON.stringify(localStorageItems))
 
     console.log('localStorageItems', localStorageItems)
 

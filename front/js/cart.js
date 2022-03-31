@@ -1,28 +1,21 @@
 const URL_API = "http://www.localhost:3000/api/products/"
 
 
-function fetchProduct() {
-    fetch(URL_API)
-        .then(function(res) {
-        if (res.ok) {
-            return res.json();
-        }
-        })
-        .then(function(dataFromApi) {
-        console.log(dataFromApi);
-        displayProduct(dataFromApi)
-        })
-        .catch(function(err) {
 
-        });
-    }
+let products = JSON.parse(localStorage.getItem('panier'));
+console.log('liste', products)
 
+const cartItems = document.getElementById('cart__items')
+const articlesElem = document.getElementById('totalQuantity')
+const priceElem = document.getElementById('totalPrice')
 
-let addProduit = JSON.parse(localStorage.getItem('produit'));
+let totalPrice = 0
+let nbArticles = 0
 
-const panierDisplay = async (product) => {
+products.forEach(product => {
 
-    const cartItems = document.getElementById('cart__items')
+    nbArticles += product.quantity
+    totalPrice += product.info.price
 
     const cartItem = document.createElement('article')
     cartItem.classList.add('cart__item')
@@ -33,7 +26,7 @@ const panierDisplay = async (product) => {
     cartItem.appendChild(itemImgKanapCart)
 
     const imgItemKanapCart = document.createElement('img')
-    // imgItemKanapCart.src = product.imageUrl
+    imgItemKanapCart.src = product.info.imageUrl
     itemImgKanapCart.appendChild(imgItemKanapCart)
     
     const carteItemContent = document.createElement('div')
@@ -45,15 +38,15 @@ const panierDisplay = async (product) => {
     carteItemContent.appendChild(carteItemContentDescription)
 
     const contentDescriptionTitre = document.createElement('h2')
-    // contentDescriptionTitre.innerHTML = product.name
+    contentDescriptionTitre.innerHTML = product.info.name
     carteItemContentDescription.appendChild(contentDescriptionTitre)
 
     const contentDescriptionCouleur = document.createElement('p')
-    // contentDescriptionCouleur.innerHTML = product.colors
+    contentDescriptionCouleur.innerHTML = product.selectedVariant
     carteItemContentDescription.appendChild(contentDescriptionCouleur)
 
     const contentDescriptionPrice = document.createElement('p')
-    // contentDescriptionPrice.innerHTML = product.price
+    contentDescriptionPrice.innerHTML = product.info.price
     carteItemContentDescription.appendChild(contentDescriptionPrice)
 
     const carteItemContentSettings = document.createElement('div')
@@ -65,10 +58,15 @@ const panierDisplay = async (product) => {
     carteItemContentSettings.appendChild(contentSettingsQuantity)
 
     const contentSettingsQuantityP = document.createElement('p')
-    // contentSettingsQuantityP.innerHTML =
+    contentSettingsQuantityP.innerHTML = 'Qté :'
     contentSettingsQuantity.appendChild(contentSettingsQuantityP)
 
     const contentSettingsQuantityInput = document.createElement('input')
+    contentSettingsQuantityInput.type = 'number'
+    contentSettingsQuantityInput.name = 'itemQuantity'
+    contentSettingsQuantityInput.min = '1'
+    contentSettingsQuantityInput.max = '100'
+    contentSettingsQuantityInput.value = product.quantity
     contentSettingsQuantityInput.classList.add('itemQuantity')
     contentSettingsQuantity.appendChild(contentSettingsQuantityInput)
 
@@ -78,15 +76,10 @@ const panierDisplay = async (product) => {
 
     const contentSettingsDeleteP = document.createElement('p')
     contentSettingsDeleteP.classList.add('deleteItem')
-    contentSettingsDeleteP.innerHTML = "Suppimer"
+    contentSettingsDeleteP.innerHTML = "Supprimer"
     contentSettingsDelete.appendChild(contentSettingsDeleteP)
+});
 
 
-
-    if(addProduit) {
-        await addProduit;
-        console.log(addProduit);
-    }
-};
-
-panierDisplay();
+articlesElem.innerHTML = nbArticles
+priceElem.innerHTML = totalPrice
