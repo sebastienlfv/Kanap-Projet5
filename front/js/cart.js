@@ -80,22 +80,18 @@ products.forEach(product => {
     contentSettingsDelete.appendChild(contentSettingsDeleteP)
 
 
-    let btn_supprimer = document.querySelectorAll('.deleteItem');
+    let btn_supprimer = document.getElementsByClassName('deleteItem');
     console.log(btn_supprimer)
 
-    for (let l = 0; l < btn_supprimer.length; l++){
-        btn_supprimer[l].addEventListener('click', (event) =>{
-            event.preventDefault();
-            console.log(event)
+    for (let i = 0; i < btn_supprimer.length; i++){
 
-            let id_delete = product.info._id;
+        btn_supprimer[i].addEventListener('click', () =>{
 
-            product = product.filter(elem => elem.info._id !== id_delete);
+            products.splice(i, 1);
 
-            localStorage.setItem('produit', JSON.stringify(product));
+            console.log('New Liste', products)
 
-            alert("Ce produit a été supprimer du panier")
-            window.location.href = 'cart.html'
+            localStorage.setItem('panier', JSON.stringify(products))
         })
     }
 });
