@@ -16,7 +16,7 @@ function displayCart() {
     products.forEach(product => {
 
         nbArticles += product.quantity
-        totalPrice += product.info.price
+        totalPrice += product.info.price*product.quantity
     
         const cartItem = document.createElement('article')
         cartItem.classList.add('cart__item')
@@ -118,16 +118,15 @@ function sendOrder(order) {
         // vider le localStorage
         // faire un redirect vers la page de commande en mettant en paramètre l'id
     })
-    console.log("sendOrder");
+    console.log("sendOrder", order);
 }
 
 const formulaireDeCommande = document.querySelector('.cart__order__form')
 
 formulaireDeCommande.addEventListener('submit', (e) =>{
-    e.preventDefault();
+    // e.preventDefault();
 
 
-    
     const formData = new FormData(formulaireDeCommande)
     const prenom = formData.get('firstName')
     const nom = formData.get('lastName')
@@ -135,6 +134,97 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
     const ville = formData.get('city')
     const email = formData.get('email')
 
+    // gérer la validation du formulaire
+
+    let prenomID = document.getElementById('firstName')
+    let prenomRegex = /^[a-z,A-Z,-,é,è]+$/
+
+    let nomID = document.getElementById('lastName')
+    let nomRegex = /^[a-z,A-Z,-,é,è]+$/
+
+
+    let adressID = document.getElementById('address')
+    let adressRegex = /^[a-z,A-Z,-,\s,0-9]+$/
+
+
+    let villeID = document.getElementById('city')
+    let VilleRegex = /^[a-z,A-Z,-]+$/
+
+
+    let emailID = document.getElementById('email')
+    let emailRegex = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/
+
+
+
+    // verif prenom
+
+    if(prenomID.value.trim() == '') {
+        let firstnameError = document.getElementById('firstNameErrorMsg')
+        firstnameError.innerHTML = 'Le champs prénom est requis.'
+        firstnameError.style.color = 'red'
+        e.preventDefault()
+    } else if (prenomRegex.test(prenomID.value) == false) {
+        let firstnameError = document.getElementById('firstNameErrorMsg')
+        firstnameError.innerHTML = 'Le champs prénom doit comporter des lettres et des tirets uniquements.';
+        firstnameError.style.color = 'red'
+        e.preventDefault()
+    }
+
+    // verif nom
+
+    if(nomID.value.trim() == '') {
+        let lastnameError = document.getElementById('lastNameErrorMsg')
+        lastnameError.innerHTML = 'Le champs nom est requis.'
+        lastnameError.style.color = 'red'
+        e.preventDefault()
+    } else if (nomRegex.test(nomID.value) == false) {
+        let lastnameError = document.getElementById('lastNameErrorMsg')
+        lastnameError.innerHTML = 'Le champs nom doit comporter des lettres et des tirets uniquements.';
+        lastnameError.style.color = 'red'
+        e.preventDefault()
+    }
+
+    // verif adress
+
+    if (adressID.value.trim() == '') {
+        let adressError = document.getElementById('addressErrorMsg')
+        adressError.innerHTML = 'Le champs adresse est requis'
+        adressError.style.color = 'red'
+        e.preventDefault()
+    } else if(adressRegex.test(adressID.value) == false) {
+        let adressError = document.getElementById('addressErrorMsg')
+        adressError.innerHTML = 'Le champs adresse doit comporter des lettres, des chiffres, des tirets et des espaces uniquements'
+        adressError.style.color = 'red'
+        e.preventDefault()
+    }
+
+    // verif ville
+
+    if (villeID.value.trim() == '') {
+        let villeError = document.getElementById('cityErrorMsg')
+        villeError.innerHTML = 'Le champs Ville est requis'
+        villeError.style.color = 'red'
+        e.preventDefault()
+    } else if (VilleRegex.test(villeID.value) == false) {
+        let villeError = document.getElementById('cityErrorMsg')
+        villeError.innerHTML = 'Le champs Ville doit comporter des lettres, des tirets uniquements'
+        villeError.style.color = 'red'
+        e.preventDefault()
+    }
+
+    // verif email
+
+    if (emailID.value.trim() == '') {
+        let emailError = document.getElementById('emailErrorMsg')
+        emailError.innerHTML = 'Le champs Email est requis'
+        emailError.style.color = 'red'
+        e.preventDefault()
+    } else if (emailRegex.test(emailID.value) == false) {
+        let emailError = document.getElementById('emailErrorMsg')
+        emailError.innerHTML = "Ceci n'est pas une email valide"
+        emailError.style.color = 'red'
+        e.preventDefault()
+    }
 
 
 
@@ -144,8 +234,8 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
 
     // récuperer les id des produits et les mettres dans un tableau
 
-    const productsID = products.info._id
-    console.log('productsID',productsID);
+    // const productsID = products.info._id
+    // console.log('productsID',productsID);
 
     //
 
@@ -155,7 +245,6 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
     
     console.log("Information Formulaire",informationFormulaire);
 
-    // console.log('Information Client', { prenom, nom, adress, ville, email}, products);
 })
 
 // const getPrenom = document.getElementById('firstName').value = localStorage.getItem()
