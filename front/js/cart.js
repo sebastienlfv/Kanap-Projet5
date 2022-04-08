@@ -82,6 +82,18 @@ function displayCart() {
     });
 }
 
+// function calcul(){
+//     const quantite = document.querySelector('.itemQuantity').value
+//     console.log('Quantite',quantite)
+
+//     document.getElementById('totalQuantity') = ss_total
+
+//     const total = parseFloat(quantite) * parseFloat(ss_total)
+//     document.getElementById('totalPrice') = total.toFixed(2)
+// }
+
+
+
 function removeItemCart() {
     let btn_supprimer = document.getElementsByClassName('deleteItem');
     console.log(btn_supprimer)
@@ -96,6 +108,9 @@ function removeItemCart() {
 
             localStorage.setItem('panier', JSON.stringify(products))
             window.location.reload();
+            // const cartItem = document.querySelector('.cart__item')
+            // cartItem.remove();
+
         })
     }
 }
@@ -124,7 +139,7 @@ function sendOrder(order) {
 const formulaireDeCommande = document.querySelector('.cart__order__form')
 
 formulaireDeCommande.addEventListener('submit', (e) =>{
-    // e.preventDefault();
+    e.preventDefault();
 
 
     const formData = new FormData(formulaireDeCommande)
@@ -234,10 +249,8 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
 
     // récuperer les id des produits et les mettres dans un tableau
 
-    // const productsID = products.info._id
-    // console.log('productsID',productsID);
-
-    //
+    const tableauListeID = {}
+    
 
     const payload = {contact: informationFormulaire, produits: products}
     console.log('Payload',payload);
