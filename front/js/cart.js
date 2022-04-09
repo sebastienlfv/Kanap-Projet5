@@ -130,6 +130,7 @@ function sendOrder(order) {
     .then(function(value){
         console.log(value);
         // récupérer l'id qui est envoyer par l'API
+        // products.info._id
         // vider le localStorage
         // faire un redirect vers la page de commande en mettant en paramètre l'id
     })
@@ -183,6 +184,8 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         firstnameError.innerHTML = 'Le champs prénom doit comporter des lettres et des tirets uniquements.';
         firstnameError.style.color = 'red'
         e.preventDefault()
+    } else if (prenomRegex.test(prenomID.value) == true) {
+        window.location='confirmation.html'
     }
 
     // verif nom
@@ -197,6 +200,8 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         lastnameError.innerHTML = 'Le champs nom doit comporter des lettres et des tirets uniquements.';
         lastnameError.style.color = 'red'
         e.preventDefault()
+    } else if (nomRegex.test(nomID.value) == true) {
+        window.location='confirmation.html'
     }
 
     // verif adress
@@ -211,6 +216,8 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         adressError.innerHTML = 'Le champs adresse doit comporter des lettres, des chiffres, des tirets et des espaces uniquements'
         adressError.style.color = 'red'
         e.preventDefault()
+    } else if (adressRegex.test(adressID.value) == true) {
+        window.location='confirmation.html'
     }
 
     // verif ville
@@ -225,6 +232,8 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         villeError.innerHTML = 'Le champs Ville doit comporter des lettres, des tirets uniquements'
         villeError.style.color = 'red'
         e.preventDefault()
+    } else if (VilleRegex.test(villeID.value) == true) {
+        window.location='confirmation.html'
     }
 
     // verif email
@@ -239,6 +248,8 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         emailError.innerHTML = "Ceci n'est pas une email valide"
         emailError.style.color = 'red'
         e.preventDefault()
+    } else if (emailRegex.test(emailID.value) == true) {
+        window.location='confirmation.html'
     }
 
 
@@ -249,7 +260,13 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
 
     // récuperer les id des produits et les mettres dans un tableau
 
-    const tableauListeID = {}
+    const tableauListeID = []
+
+    products.forEach(element => {
+        tableauListeID.push(element.info._id)
+    });
+
+    console.log('tableauID', tableauListeID);
     
 
     const payload = {contact: informationFormulaire, produits: products}
