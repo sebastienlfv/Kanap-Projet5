@@ -105,11 +105,11 @@ function removeItemCart() {
             products.splice(i, 1);
 
             console.log('New Liste', products)
+            // régénérer l'affiche du panier 
+            displayCart();
 
             localStorage.setItem('panier', JSON.stringify(products))
-            window.location.reload();
-            // const cartItem = document.querySelector('.cart__item')
-            // cartItem.remove();
+           
 
         })
     }
@@ -127,12 +127,12 @@ function sendOrder(order) {
             return res.json();
         }
     })
-    .then(function(value){
-        console.log(value);
-        // récupérer l'id qui est envoyer par l'API
-        // products.info._id
+    .then(function(response){
+        console.log('value',response);
         // vider le localStorage
+        localStorage.clear();
         // faire un redirect vers la page de commande en mettant en paramètre l'id
+        document.location.href=`confirmation.html?id=${response.orderId}`
     })
     console.log("sendOrder", order);
 }
@@ -144,10 +144,10 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
 
 
     const formData = new FormData(formulaireDeCommande)
-    const prenom = formData.get('firstName')
-    const nom = formData.get('lastName')
-    const adress = formData.get('address')
-    const ville = formData.get('city')
+    const firstName = formData.get('firstName')
+    const lastName = formData.get('lastName')
+    const address = formData.get('address')
+    const city = formData.get('city')
     const email = formData.get('email')
 
     // gérer la validation du formulaire
@@ -170,7 +170,17 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
     let emailID = document.getElementById('email')
     let emailRegex = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/
 
+    const tableauListeID = []
+    const informationFormulaire = {firstName, lastName, address, city, email}
 
+    // verif global
+
+    if(prenomRegex.test(prenomID.value) && nomRegex.test(nomID.value) && adressRegex.test(adressID.value) && VilleRegex.test(villeID.value) && emailRegex.test(emailID.value) == true){
+
+        const payload = {contact: informationFormulaire, products: tableauListeID}
+        console.log('Payload',payload);
+        sendOrder(payload);
+    }
 
     // verif prenom
 
@@ -184,8 +194,6 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         firstnameError.innerHTML = 'Le champs prénom doit comporter des lettres et des tirets uniquements.';
         firstnameError.style.color = 'red'
         e.preventDefault()
-    } else if (prenomRegex.test(prenomID.value) == true) {
-        window.location='confirmation.html'
     }
 
     // verif nom
@@ -200,8 +208,6 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         lastnameError.innerHTML = 'Le champs nom doit comporter des lettres et des tirets uniquements.';
         lastnameError.style.color = 'red'
         e.preventDefault()
-    } else if (nomRegex.test(nomID.value) == true) {
-        window.location='confirmation.html'
     }
 
     // verif adress
@@ -216,8 +222,6 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         adressError.innerHTML = 'Le champs adresse doit comporter des lettres, des chiffres, des tirets et des espaces uniquements'
         adressError.style.color = 'red'
         e.preventDefault()
-    } else if (adressRegex.test(adressID.value) == true) {
-        window.location='confirmation.html'
     }
 
     // verif ville
@@ -232,8 +236,6 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         villeError.innerHTML = 'Le champs Ville doit comporter des lettres, des tirets uniquements'
         villeError.style.color = 'red'
         e.preventDefault()
-    } else if (VilleRegex.test(villeID.value) == true) {
-        window.location='confirmation.html'
     }
 
     // verif email
@@ -248,19 +250,11 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
         emailError.innerHTML = "Ceci n'est pas une email valide"
         emailError.style.color = 'red'
         e.preventDefault()
-    } else if (emailRegex.test(emailID.value) == true) {
-        window.location='confirmation.html'
     }
-
-
-
-    const informationFormulaire = {prenom, nom, adress, ville, email}
 
     localStorage.setItem('Formulaire', JSON.stringify(informationFormulaire))
 
     // récuperer les id des produits et les mettres dans un tableau
-
-    const tableauListeID = []
 
     products.forEach(element => {
         tableauListeID.push(element.info._id)
@@ -268,16 +262,12 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
 
     console.log('tableauID', tableauListeID);
     
-
-    const payload = {contact: informationFormulaire, produits: products}
-    console.log('Payload',payload);
-    sendOrder(payload);
     
     console.log("Information Formulaire",informationFormulaire);
 
 })
 
-// const getPrenom = document.getElementById('firstName').value = localStorage.getItem()
+
 
 
 
