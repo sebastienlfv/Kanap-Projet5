@@ -82,15 +82,16 @@ function displayCart() {
     });
 }
 
-// function calcul(){
-//     const quantite = document.querySelector('.itemQuantity').value
-//     console.log('Quantite',quantite)
+function modifyQtyPanier() {
+    let inputQtyPanier = document.querySelector('.itemQuantity')
+    console.log('input',inputQtyPanier);
 
-//     document.getElementById('totalQuantity') = ss_total
-
-//     const total = parseFloat(quantite) * parseFloat(ss_total)
-//     document.getElementById('totalPrice') = total.toFixed(2)
-// }
+    inputQtyPanier.addEventListener('change', () => {
+        if (inputQtyPanier++) {
+            priceElem++
+        }
+    })
+}
 
 
 
@@ -99,17 +100,26 @@ function removeItemCart() {
     console.log(btn_supprimer)
 
     for (let i = 0; i < btn_supprimer.length; i++){
-
+        let itemToDelete = btn_supprimer[i].closest('.cart__item')
         btn_supprimer[i].addEventListener('click', () =>{
 
             products.splice(i, 1);
 
             console.log('New Liste', products)
-            // régénérer l'affiche du panier 
-            displayCart();
+            itemToDelete.remove()
 
             localStorage.setItem('panier', JSON.stringify(products))
-           
+            
+            console.log(products);
+
+            products.forEach(product => {
+                nbArticles = products.length
+                totalPrice = product.info.price*products.length
+            })
+            
+            articlesElem.innerHTML = nbArticles
+            priceElem.innerHTML = totalPrice
+            
 
         })
     }
@@ -273,7 +283,7 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
 
 displayCart();
 removeItemCart();
-
+modifyQtyPanier();
 
 articlesElem.innerHTML = nbArticles
 priceElem.innerHTML = totalPrice
