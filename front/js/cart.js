@@ -87,9 +87,19 @@ function modifyQtyPanier() {
     console.log('input',inputQtyPanier);
 
     inputQtyPanier.addEventListener('change', () => {
-        if (inputQtyPanier++) {
-            priceElem++
-        }
+        products.forEach(product => {
+            if (product.quantity++) {
+
+                nbArticles = product.quantity
+                totalPrice = product.quantity*product.info.price
+                localStorage.setItem('panier', JSON.stringify(products))
+
+                articlesElem.innerHTML = nbArticles
+                priceElem.innerHTML = totalPrice
+
+                console.log(product);
+            }
+        })
     })
 }
 
@@ -113,14 +123,16 @@ function removeItemCart() {
             console.log(products);
 
             products.forEach(product => {
-                nbArticles = products.length
-                totalPrice = product.info.price*products.length
+
+                nbArticles = product.quantity*products.length
+                totalPrice = product.info.price*product.quantity
+
+                articlesElem.innerHTML = nbArticles
+                priceElem.innerHTML = totalPrice
+
+                console.log('test',product.quantity*products.length);
             })
             
-            articlesElem.innerHTML = nbArticles
-            priceElem.innerHTML = totalPrice
-            
-
         })
     }
 }
