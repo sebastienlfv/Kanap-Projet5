@@ -98,7 +98,18 @@ function modifyQtyPanier() {
                 priceElem.innerHTML = totalPrice
 
                 console.log(product);
+            } else if (product.quantity--) {
+
+                nbArticles = product.quantity
+                totalPrice = product.quantity*product.info.price
+                localStorage.setItem('panier', JSON.stringify(products))
+
+                articlesElem.innerHTML = nbArticles
+                priceElem.innerHTML = totalPrice
+
+                console.log(product);
             }
+
         })
     })
 }
