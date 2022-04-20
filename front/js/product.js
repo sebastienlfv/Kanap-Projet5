@@ -84,7 +84,14 @@ const addKanap = (product) => {
       itemFound.quantity += parseInt(cartItem.quantity)
     } else {
       localStorageItems.push(cartItem);
-    } 
+    }
+
+    if (document.getElementById('colors').options[0].selected == true){
+      alert('Veuillez choisir une couleur')
+      localStorage.remove(cartItem)
+    }
+
+    console.log(document.getElementById('colors').options[0]);
 
 
     localStorage.setItem('panier', JSON.stringify(localStorageItems))

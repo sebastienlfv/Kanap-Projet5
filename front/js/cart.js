@@ -12,6 +12,7 @@ const priceElem = document.getElementById('totalPrice')
 let totalPrice = 0
 let nbArticles = 0
 
+
 function displayCart() {
     products.forEach(product => {
 
@@ -82,38 +83,9 @@ function displayCart() {
     });
 }
 
-function modifyQtyPanier() {
-    let inputQtyPanier = document.querySelector('.itemQuantity')
-    console.log('input',inputQtyPanier);
+// traiter le faites de ne pas avoir de variante
 
-    inputQtyPanier.addEventListener('change', () => {
-        products.forEach(product => {
-            if (product.quantity++) {
-
-                nbArticles = product.quantity
-                totalPrice = product.quantity*product.info.price
-                localStorage.setItem('panier', JSON.stringify(products))
-
-                articlesElem.innerHTML = nbArticles
-                priceElem.innerHTML = totalPrice
-
-                console.log(product);
-            } else if (product.quantity--) {
-
-                nbArticles = product.quantity
-                totalPrice = product.quantity*product.info.price
-                localStorage.setItem('panier', JSON.stringify(products))
-
-                articlesElem.innerHTML = nbArticles
-                priceElem.innerHTML = totalPrice
-
-                console.log(product);
-            }
-
-        })
-    })
-}
-
+//
 
 
 function removeItemCart() {
@@ -300,13 +272,38 @@ formulaireDeCommande.addEventListener('submit', (e) =>{
 
 })
 
+function calculTotals(productsList) {
+    let totalPrice = 0
+    let totalQty = 0
 
+    productsList.forEach(product => {
+        totalQty += parseInt(product.quantity)
+        totalPrice += parseInt(product.quantity*product.info.price)
+    })
 
+    articlesElem.innerHTML = totalQty
+    priceElem.innerHTML = totalPrice
 
+    console.log(totalPrice);
+}
 
 displayCart();
 removeItemCart();
-modifyQtyPanier();
+
+let quantityContainer = [...document.getElementsByClassName('itemQuantity')]
+const itemsContainer = document.getElementById('cart__items')
+
+quantityContainer.forEach((itemsContainer, index) => {
+    itemsContainer.addEventListener('change', () => { 
+        console.log('test');
+      // je change la quantité du produit dans le tableau
+      products[index].quantity = quantityContainer[index].value
+      // j'appelle ensuite une fonction nommé calculTotals dans laquelle je fait mon calcul pour l'affichage du prix total du panier et de la quantité en lui passant en paramètre le tableau
+      calculTotals(products)
+      // je met à jour le localstorage avec le tableau modifié
+      localStorage.setItem("panier", JSON.stringify(products))
+    })
+  })
 
 articlesElem.innerHTML = nbArticles
 priceElem.innerHTML = totalPrice
